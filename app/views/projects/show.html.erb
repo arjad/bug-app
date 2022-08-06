@@ -1,0 +1,20 @@
+<div class="p-4">
+<h1>Project Detail </h1>
+<p>title = <%= @oneproject.title %></p>
+<p>descrption = <%= @oneproject.description %></p>
+<p> created at = <%= @oneproject.created_at %></p>
+<p> updated at = <%= @oneproject.updated_at %></p>
+<br>
+
+<%= link_to 'see bugs', project_bugs_path(@oneproject) %>
+</div>
+<section class="m-5 text-center">
+<h2><u>user involved </u></h2> <br><br>
+<% @oneproject.users.each do |x| %>
+        <p> email = <%= x.email %> </p>
+        <p> name=  <%= x.username %></p>
+        <p> type = <%= x.usertype %></p>
+        <hr>
+<% end %>
+</section>
+

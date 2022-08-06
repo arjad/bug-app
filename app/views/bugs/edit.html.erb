@@ -1,0 +1,82 @@
+<div class="m-5">
+        <h2><u>Edit one Bug </u></h2>
+        <%= form_for @editbug ,:url => { :action => "update" } do |f| %>
+            <%= token_tag %>
+            <p>
+                <%= f.label :title %> <br/>
+                <%= f.text_field :title %>
+            </p>
+            <p>
+                <%= f.label :des %> <br/>
+                <%= f.text_area :des %>
+            </p>
+            
+            <div class="field form-group my-3 ">
+                <%= f.label :bugtype %><br />
+                <%= f.select :bugtype, Bug.bugtypes.keys, {:prompt => "Select type:"}, { :id => "type", :onchange => "yourOnChangeHandler();" } %>
+            </div>
+  
+            <div class="field form-group my-3">
+                <%= f.label :status %><br />
+                <%= f.select :status, @bug_status = Bug.statuses.keys , class: "form-control" %>
+                <p id="her"> </p>
+            </div>
+            <div class="field form-group my-3">
+                <%= f.label :deadline %><br />
+                <%= f.datetime_select :deadline %>
+
+            </div>
+            <div class="field form-group my-3">
+                <%= f.label :resolver_id %><br />
+               
+                <% @project.users.each do |users| %>
+                    <% if users.usertype == "Developer" %>
+                        <p><%= f.radio_button :resolver_id, users.id %> <%= users.username %></p>
+                    <% end %>
+                <% end %>
+            </div>
+            <p>
+                <%= f.label :screenshot %><br />
+                <%= f.file_field :screenshot %>
+            </p>
+           
+            <p>
+                <%= f.submit "add new bug" %>
+            </p>
+        <% end %>
+
+</div>
+<script>
+
+function yourOnChangeHandler()
+{
+#     var bug_type = document.getElementById("type").value;
+    
+#     if (bug_type == 'bug')
+#         {
+#             document.getElementById("her").innerHTML = "bug"
+
+#         }
+#     else{
+#         document.getElementById("her").innerHTML = "not bug"
+
+#     }
+
+    
+#   var o = $("select[name='bug[status]']")[0][2]
+
+#   console.log("obj = " , o)
+
+#   if(this.value === "bug")
+#     {
+#       o.value="resolved"
+#       o.text="resolved"
+#     }
+#   else if (this.value === "feature")
+#     {
+#     obj.value ="completed"
+#     o.text = "completed"
+#   }
+
+}
+</script>

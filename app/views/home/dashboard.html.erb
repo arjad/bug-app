@@ -1,0 +1,36 @@
+<p class="m-5">
+<% if user_signed_in? %>
+<section class="container">
+<section class="row">
+  
+  <div class="col-6">
+    <h2><u>Your Account</u></h2>
+    username = <%= current_user.username %><br>
+    user type = <%= current_user.usertype %><br>
+    email = <%= current_user.email %><br>
+
+    <%= link_to 'logout', destroy_user_session_path, method:"delete" %><br>
+    <%= link_to 'Edit Profile', edit_user_registration_path %><br>
+    <%= link_to 'see my projects', projects_path %><br>
+    <% if current_user.usertype == "Manager" %>
+     <div class="one">
+      manager can add <br>
+      <%= link_to "add a new project", new_project_path %>
+    </div>
+    <% else %>
+     <div class="two">developer cannot add new project</div>
+    <% end %>
+   
+  </div>
+</section>
+</section>
+<% else %>
+    <p>signin or signup first</p>
+
+<% end %>
+
+
+<br>
+<%= link_to "Back", :back %>
+</p>
+

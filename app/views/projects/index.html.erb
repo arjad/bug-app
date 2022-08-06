@@ -1,0 +1,38 @@
+<section class="m-5 container"> 
+<section class="row"> 
+
+<h2><u>All Projects</u></h2><br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Project Name</th>
+      <th scope="col">Description #</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <% @myprojects.each do |x| %>
+        <tr>
+            <td> <%= link_to x.title, x %>  </td>
+            <td> <%= x.description %></td>
+
+            <td><%= link_to "delete", x, :confirm => "are you sure?", :method => :delete %></td>
+            <td><%= link_to "edit", edit_project_path(x) %></td>
+        </tr>
+    <% end %>
+  
+  </tbody>
+</table>
+
+</section>
+</section>
+<% if current_user.usertype == "Manager" %>
+     <div class="one">
+      manager can add <br>
+      <%= link_to "add a new project", new_project_path %>
+    </div>
+<% else %>
+     <div class="two">developer cannot add new project</div>
+<% end %>

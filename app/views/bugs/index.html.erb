@@ -1,0 +1,67 @@
+<section class="m-5 container"> 
+<section class="row"> 
+
+<h2><u>All Bugs</u></h2>
+
+    <% if can? :create, Bug %>
+      <%= link_to "add new bug ", new_project_bug_path %>
+    <% else %>
+      you cannot add
+    <% end %>
+<br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Bug title</th>
+      <th scope="col">description </th>
+      <th scope="col">type </th>
+      <th scope="col">status</th>
+      <th scope="col">creator (QA) </th>
+      <th scope="col">resolver(Developer) </th>
+      <th scope="col">deadline </th>
+
+      <th></th>
+      <th></th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <% @bugs.each do |x| %>
+        <tr>
+            <td><a href="bugs/<%= x.id %>"><%= x.title %></a></td>
+            <%#=
+            <td> <%= link_to x.title, project_bug(@bugs) %>  <%#=</td>
+            %>
+            <td> <%= x.des %></td>
+            <td> <%= x.bugtype %></td>
+            <td> <%= x.status %></td>
+            <td> 
+            <% if x.creator_id %>
+              <%= User.find(x.creator_id).username %>
+            <% else %>
+                nil
+            <% end %>
+            </td>
+            <td> 
+              <% if x.resolver_id %>
+              <%= User.find(x.resolver_id).username %>
+              <% else %>
+                nil
+              <% end %>
+            </td>
+            <td> <%= x.deadline %> </td>
+
+            <td><a href="bugs/<%= x.id %>/edit">edit the bug</a></td>
+            <td><%= link_to 'Delete', project_bug_path(params[:project_id], x), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+
+        </tr>
+    <% end %>
+  
+  </tbody>
+</table>
+
+</section>
+</section>
+
+

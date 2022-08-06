@@ -1,0 +1,43 @@
+
+<div class="p-4">
+    <h1>Bug Detail </h1>
+    <p>title = <%= @showbug.title %></p>
+    <p> belongs to  
+        <u><b>
+        <% if @showbug.project_id %>
+            <%= Project.find(@showbug.project_id).title %> 
+        <% else %>
+            no 
+        <% end %>
+
+        </b> </u>   project 
+    </p>
+    <p>descrption = <%= @showbug.des %></p>
+    <p>bugtype = <%= @showbug.bugtype %></p>
+    <p>status = <%= @showbug.status %></p>
+    <p>created at  = <%= @showbug.created_at %></p>
+    <p>updated at  = <%= @showbug.updated_at %></p>
+    <p>deadline = <%= @showbug.deadline %></p>
+
+    <p>creator =  
+        <% if @showbug.creator_id %>
+            <%= User.find(@showbug.creator_id).username %>
+        <% else %>
+            nil
+        <% end %>
+   </p>
+    <p> resolver = 
+        <% if @showbug.resolver_id %>
+            <%= User.find(@showbug.resolver_id).username %>
+        <% else %>
+        nil
+        <% end %>
+    </p>
+    <p> screenshot = <%= @showbug.screenshot %> </p>
+
+    <%= image_tag @showbug.screenshot_url(:thumb) if @showbug.screenshot? %>
+    
+    <br>
+</div>
+
+

@@ -1,0 +1,25 @@
+<div class="m-5">
+        <h2><u>Enter new project </u></h2>
+
+        <%= form_for @project,:url => { :action => "create" } do |f| %>
+            <%= token_tag %>
+            <p>
+                <%= f.label :title %> <br/>
+                <%= f.text_field :title %>
+            </p>
+            <p>
+                <%= f.label :description %> <br/>
+                <%= f.text_area :description %>
+            </p>
+            <% User.all.each do |users| %>
+                <% if users.usertype != "Manager" %>
+                <p> <%= check_box_tag "user_ids[]", users.id, nil, {multiple:true} %>
+
+                    <%=users.username%></p>
+                <% end %>
+            <% end %>
+            <p>
+                <%= f.submit "add project" %>
+            </p>
+        <% end %>
+</div>

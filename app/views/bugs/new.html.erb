@@ -1,0 +1,50 @@
+<div class="m-5">
+        <h2><u>Enter new Bug </u></h2>
+        <%= form_for Bug.new ,:url => { :action => "create" } do |f| %>
+            <%= token_tag %>
+            <p>
+                <%= f.label :title %> <br/>
+                <%= f.text_field :title %>
+            </p>
+            <p>
+                <%= f.label :des %> <br/>
+                <%= f.text_area :des %>
+            </p>
+            
+            <div class="field form-group my-3 ">
+                <%= f.label :bugtype %><br />
+                <%= f.select :bugtype, Bug.bugtypes.keys, {:prompt => "Select type:"}, { :id => "type", :onchange => "yourOnChangeHandler();" } %>
+            </div>
+
+            <div class="field form-group my-3">
+                <% bug_status = ['new', 'started', 'resolved'] %>
+                <%= f.label :status %><br />
+                <%# f.select :status, Bug.statuses.keys, class: "form-control"  %>
+                <%= f.select(:status, bug_status,{}) %>
+                
+            </div>
+            <div class="field form-group my-3">
+                <%= f.label :deadline %><br />
+                <%= f.datetime_select :deadline %>
+            </div>
+
+            <div class="field form-group my-3">
+                <%= f.label :resolver_id %><br />
+
+                <% User.all.each do |users| %>
+                    <% if users.usertype == "Developer" %>
+                        <p><%= f.radio_button :resolver_id, users.id %> <%= users.username %></p>
+                    <% end %>
+                  
+                <% end %>
+            </div>
+            <p>
+                <%= f.label :screenshot %><br />
+                <%= f.file_field :screenshot %>
+            </p>
+           
+            <p>
+                <%= f.submit "add new bug" %>
+            </p>
+        <% end %>
+</div>
