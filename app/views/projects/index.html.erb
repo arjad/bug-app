@@ -2,7 +2,7 @@
 <section class="row"> 
 
 <h2><u>All Projects</u></h2><br>
-<table class="table">
+<table class="table ">
   <thead>
     <tr>
       <th scope="col">Project Name</th>
@@ -18,8 +18,17 @@
             <td> <%= link_to x.title, x %>  </td>
             <td> <%= x.description %></td>
 
-            <td><%= link_to "delete", x, :confirm => "are you sure?", :method => :delete %></td>
-            <td><%= link_to "edit", edit_project_path(x) %></td>
+           
+            <td>
+            <% if can? :destroy, @myprojects %>
+              <%= link_to "delete", x, :confirm => "are you sure?", :method => :delete %>
+            <% end %>
+            </td>
+            <td>
+            <% if can? :destroy, @myprojects %>
+            <%= link_to "edit", edit_project_path(x) %>
+            <% end %>
+            </td>
         </tr>
     <% end %>
   
@@ -34,5 +43,5 @@
       <%= link_to "add a new project", new_project_path %>
     </div>
 <% else %>
-     <div class="two">developer cannot add new project</div>
+     <div class="two"> Developer/SQA cannot add project</div>
 <% end %>

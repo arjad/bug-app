@@ -1,8 +1,14 @@
 <div class="m-5">
         <h2><u>Edit your project </u></h2>
 
-        <%= form_for @project,:url => { :action => "update" } do |f| %>
+        <%= form_for @project,:url => { :action => "create" } do |f| %>
             <%= token_tag %>
+            <% if @project.errors.any? %>
+                <h6> error = </h6>
+                <%= @project.errors.full_messages.each do |m| %>
+                <%= m %><br>
+                <% end %>
+            <% end %>
             <p>
                 <%= f.label :title %> <br/>
                 <%= f.text_field :title %>

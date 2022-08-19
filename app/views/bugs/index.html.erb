@@ -19,7 +19,6 @@
       <th scope="col">creator (QA) </th>
       <th scope="col">resolver(Developer) </th>
       <th scope="col">deadline </th>
-
       <th></th>
       <th></th>
 
@@ -37,23 +36,31 @@
             <td> <%= x.bugtype %></td>
             <td> <%= x.status %></td>
             <td> 
-            <% if x.creator_id %>
-              <%= User.find(x.creator_id).username %>
+            <% if x.creator %>
+              <%= x.creator.username %>
             <% else %>
-                nil
+                no 
             <% end %>
             </td>
             <td> 
-              <% if x.resolver_id %>
-              <%= User.find(x.resolver_id).username %>
+              <% if x.resolver %>
+              <%= x.resolver.username %>
               <% else %>
                 nil
               <% end %>
             </td>
             <td> <%= x.deadline %> </td>
 
-            <td><a href="bugs/<%= x.id %>/edit">edit the bug</a></td>
-            <td><%= link_to 'Delete', project_bug_path(params[:project_id], x), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <td>
+            <% if can? :update, @bugs %>
+              <a href="bugs/<%= x.id %>/edit">edit the bug</a>
+            <% end %>
+          </td>
+          <td> 
+            <% if can? :destroy, @bugs %>
+                <%= link_to 'Delete', project_bug_path(params[:project_id], x), method: :delete, data: {confirm: 'Are you sure?'} %>
+            <% end %>
+          </td>
 
         </tr>
     <% end %>

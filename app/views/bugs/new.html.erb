@@ -1,7 +1,13 @@
 <div class="m-5">
         <h2><u>Enter new Bug </u></h2>
-        <%= form_for Bug.new ,:url => { :action => "create" } do |f| %>
+        <%= form_for @bug ,:url => { :action=> "create" } do |f| %>
             <%= token_tag %>
+            <% if @bug.errors.any? %>
+                <h6> error = </h6>
+                <%= @bug.errors.full_messages.each do |m| %>
+                <%= m %><br>
+                <% end %>
+            <% end %>
             <p>
                 <%= f.label :title %> <br/>
                 <%= f.text_field :title %>
@@ -17,7 +23,7 @@
             </div>
 
             <div class="field form-group my-3">
-                <% bug_status = ['new', 'started', 'resolved'] %>
+                <% bug_status = ['new_bug', 'started', 'resolved'] %>
                 <%= f.label :status %><br />
                 <%# f.select :status, Bug.statuses.keys, class: "form-control"  %>
                 <%= f.select(:status, bug_status,{}) %>
@@ -27,17 +33,18 @@
                 <%= f.label :deadline %><br />
                 <%= f.datetime_select :deadline %>
             </div>
-
             <div class="field form-group my-3">
-                <%= f.label :resolver_id %><br />
-
-                <% User.all.each do |users| %>
-                    <% if users.usertype == "Developer" %>
-                        <p><%= f.radio_button :resolver_id, users.id %> <%= users.username %></p>
-                    <% end %>
-                  
+            <%= f.label :resolver_id %><br />
+           
+            <% if @project %>
+            <% @project.users.each do |users| %>
+                <% if users.usertype == "Developer" %>
+                    <p><%= f.radio_button :resolver_id, users.id %> <%= users.username %></p>
                 <% end %>
-            </div>
+            <% end %>
+            <% end %>
+        </div>
+            
             <p>
                 <%= f.label :screenshot %><br />
                 <%= f.file_field :screenshot %>
